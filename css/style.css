@@ -176,6 +176,15 @@ code { font-size: .85em; background: rgba(0,0,0,.08); padding: .05em .35em; bord
   font-size: .76rem; font-weight: 700; pointer-events: none;
 }
 .kv__hint::before { content: ""; position: absolute; left: 11px; top: 50%; width: 12px; height: 12px; margin-top: -6px; border-radius: 50%; background: var(--mikan); }
+.kv.is-grabbing { cursor: grabbing; }
+.kv__score {
+  position: absolute; z-index: 3; right: var(--gutter); top: calc(100% - 92px);
+  padding: 2px 14px; border-radius: 999px; background: var(--mikan); color: var(--ink);
+  font: 400 1rem/1.6 var(--display); pointer-events: none;
+}
+.kv__score[hidden] { display: none; }
+.kv__score.is-pop { animation: score-pop .4s cubic-bezier(.3,1.6,.5,1); }
+@keyframes score-pop { from { transform: scale(1.4); } to { transform: none; } }
 .kv__bubble {
   position: absolute; z-index: 3; transform: translate(-50%, 0) scale(.6); opacity: 0;
   padding: 4px 14px; border-radius: 999px; background: var(--paper); color: var(--green);
