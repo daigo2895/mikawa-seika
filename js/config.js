@@ -8,16 +8,16 @@
 window.SITE_CONFIG = {
   /* Instagram のユーザー名（@ は不要）。例: "mikawa_seika"
      設定すると「最新情報を見る」「DMで相談する」ボタンが有効になります。 */
-  instagramUsername: "",
+  instagramUsername: "mikawa2229",
 
   /* 店舗情報（確定したものだけ入力） */
   shop: {
-    address: "",      // 例: "愛媛県松山市〇〇町1-2-3"
-    hours: "",        // 例: "8:00〜18:00"
-    closed: "",       // 例: "日曜・祝日"
-    phone: "",        // 例: "089-000-0000"（ハイフンありでOK）
+    address: "〒791-8016 愛媛県松山市久万ノ台347-1",
+    hours: "9:00〜17:00",
+    closed: "日曜日",
+    phone: "089-924-5730",
     /* Google マップの「共有 → 地図を埋め込む」で表示される iframe の src の URL */
-    mapEmbedUrl: ""
+    mapEmbedUrl: "https://www.google.com/maps?q=" + encodeURIComponent("愛媛県松山市久万ノ台347-1 美川青果") + "&output=embed"
   },
 
   /* 画像ファイル（images/ フォルダに入れてファイル名を書く）

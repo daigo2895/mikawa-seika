@@ -60,7 +60,7 @@
   if (validUser) setText("instagram", "@" + username, urls.instagram);
 
   var map = document.querySelector("[data-map]");
-  if (map && /^https:\/\/(www\.)?google\.[a-z.]+\/maps\/embed/.test(shop.mapEmbedUrl || "")) {
+  if (map && /^https:\/\/(www\.)?google\.[a-z.]+\/maps(\/embed|\?.*output=embed)/.test(shop.mapEmbedUrl || "")) {
     map.innerHTML = "";
     var iframe = document.createElement("iframe");
     iframe.src = shop.mapEmbedUrl;
