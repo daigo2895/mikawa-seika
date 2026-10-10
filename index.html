@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>美川青果｜いつもの果物も、大切な贈り物も。｜愛媛県松山市の青果店</title>
+  <meta name="description" content="愛媛県松山市、中央卸売市場の目の前にある家族経営の青果店・美川青果。毎日の果物から贈答用果物まで。全国発送にも対応しています。">
+  <meta name="theme-color" content="#1f4a35">
+  <meta property="og:title" content="美川青果｜いつもの果物も、大切な贈り物も。">
+  <meta property="og:description" content="愛媛県松山市、市場の目の前にある家族経営の青果店。贈答用果物のご相談はInstagramのDMから。">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へスキップ</a>
+
+  <!-- ========== ヘッダー ========== -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="#top" aria-label="美川青果 トップへ">
+        <!-- 仮ロゴ：config.js の images.logo を設定すると画像に置き換わります -->
+        <span class="brand__logo" data-logo>
+          <span class="emblem emblem--sm" aria-hidden="true"><span class="emblem__mark">美</span></span>
+          <span class="brand__text">
+            <span class="brand__name">美川青果</span>
+            <span class="brand__en">MIKAWA SEIKA</span>
+          </span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+        <span class="nav-toggle__label">メニュー</span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="ページ内メニュー">
+        <ul>
+          <li><a href="#about">美川青果について</a></li>
+          <li><a href="#commitment">こだわり</a></li>
+          <li><a href="#gift">贈答用果物</a></li>
+          <li><a href="#season">季節のおすすめ</a></li>
+          <li><a href="#family">家族とお店</a></li>
+          <li><a href="#shop">店舗情報</a></li>
+          <li class="site-nav__cta"><a class="btn btn--primary btn--sm" data-link="dm">贈答品を注文したい</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ========== 1. ファーストビュー ========== -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero__inner">
+        <figure class="photo photo--hero" data-image="hero"
+                data-alt="店内で果物や野菜を手に笑顔で並ぶ、美川青果の父・母・弟の3人">
+          <div class="photo__ph">
+            <span class="ph-badge">仮画像</span>
+            <p class="ph-title">家族3人の写真</p>
+            <p class="ph-note">父・母・弟が店内で果物や野菜を持ち、笑顔で写っている写真（横長推奨）<br>
+              差し替え：<code>images/hero-family.jpg</code> を置き、<code>js/config.js</code> の <code>images.hero</code> に設定</p>
+          </div>
+        </figure>
+
+        <div class="hero__body">
+          <p class="hero__place">愛媛県松山市・市場の目の前の青果店</p>
+          <div class="hero__logo" data-logo>
+            <span class="emblem" aria-hidden="true">
+              <span class="emblem__mark">美</span>
+            </span>
+            <span class="hero__logo-text">
+              <span class="hero__logo-name">美川青果</span>
+              <span class="hero__logo-en">MIKAWA SEIKA</span>
+              <span class="hero__logo-tag">くだものだもの</span>
+            </span>
+          </div>
+          <h1 class="hero__title" id="hero-title">いつもの果物も、<br>大切な贈り物も。</h1>
+          <p class="hero__lead">祖父が始めた店を、父と母、そして弟へ。<br class="pc-only">家族でつないで約30年、毎日の果物から大切な方への贈り物まで、ひとつずつ選んでお届けしています。</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary btn--lg" data-link="dm">贈答用果物について相談する</a>
+            <a class="btn btn--ghost btn--lg" href="#shop">お店の情報を見る</a>
+          </div>
+          <p class="link-note" data-link-note>※Instagramのリンクは準備中です</p>
+        </div>
+      </div>
+      <div class="fruit-rule" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+    </section>
+
+    <!-- ========== 2. 美川青果について ========== -->
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="container about__grid">
+        <div class="about__text">
+          <p class="section__label">About</p>
+          <h2 class="section__title" id="about-title">地域とともに、30年。</h2>
+          <p>美川青果は、愛媛県松山市の中央卸売市場の目の前にある、家族経営の青果店です。</p>
+          <p>祖父が始めたこの店を、父が受け継ぎ、いまは父・母・弟の3人で切り盛りしています。毎日の食卓に並ぶ果物も、大切な方へ届ける贈り物も、地域のお客様に支えられながら、およそ30年にわたってお手伝いしてきました。</p>
+          <p>テレビ番組「もぎたてテレビ」でご紹介いただいたこともあります。</p>
+        </div>
+        <figure class="photo photo--about" data-image="about" data-alt="美川青果の店構え">
+          <div class="photo__ph">
+            <span class="ph-badge">仮画像</span>
+            <p class="ph-title">店構え・店内の写真</p>
+            <p class="ph-note"><code>images.about</code> に設定</p>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ========== 3. こだわり ========== -->
+    <section class="section commitment" id="commitment" aria-labelledby="commitment-title">
+      <div class="container">
+        <p class="section__label">Commitment</p>
+        <h2 class="section__title" id="commitment-title">美川青果のこだわり</h2>
+        <ol class="points">
+          <li class="point">
+            <span class="point__num" aria-hidden="true">01</span>
+            <h3 class="point__title">市場の目の前だから<br>できること</h3>
+            <p>店のすぐ前が中央卸売市場。その距離の近さを生かして、日々の仕入れと商品の調達を行っています。</p>
+          </li>
+          <li class="point">
+            <span class="point__num" aria-hidden="true">02</span>
+            <h3 class="point__title">一つひとつ、<br>丁寧に確認</h3>
+            <p>贈答用の果物は、箱から一度取り出して状態を確かめ、丁寧に詰め直してからお渡ししています。</p>
+          </li>
+          <li class="point">
+            <span class="point__num" aria-hidden="true">03</span>
+            <h3 class="point__title">家族でつなぐ、<br>果物への目利き</h3>
+            <p>祖父から父へ、父から弟へ。店とともに受け継いできた経験と、市場とのつながりを大切にしています。</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ========== 4. 贈答用果物 ========== -->
+    <section class="section gift" id="gift" aria-labelledby="gift-title">
+      <div class="container">
+        <div class="gift__head">
+          <div>
+            <p class="section__label section__label--light">Gift</p>
+            <h2 class="section__title" id="gift-title">大切な人に、<br>果物を贈ろう。</h2>
+            <p class="gift__lead">季節のご挨拶やお祝い、ちょっとしたお礼まで。<br class="pc-only">ご予算や贈る相手、用途に合わせてご相談いただけます。</p>
+          </div>
+          <figure class="photo photo--gift" data-image="gift" data-alt="美川青果の贈答用果物の詰め合わせ">
+            <div class="photo__ph photo__ph--dark">
+              <span class="ph-badge">仮画像</span>
+              <p class="ph-title">贈答品の写真</p>
+              <p class="ph-note"><code>images.gift</code> に設定</p>
+            </div>
+          </figure>
+        </div>
+
+        <!-- 商品カード：以下は編集用の仮データです。商品名・内容・価格が確定したら書き換えてください。 -->
+        <div class="gift__cards">
+          <article class="gift-card">
+            <p class="gift-card__tag">定番ギフト</p>
+            <h3 class="gift-card__title">［商品名を入力］</h3>
+            <p class="gift-card__desc">［内容・おすすめの用途を入力］</p>
+            <p class="gift-card__price">価格：［未設定］</p>
+            <span class="sample-flag">仮データ</span>
+          </article>
+          <article class="gift-card">
+            <p class="gift-card__tag gift-card__tag--season">季節のおすすめ</p>
+            <h3 class="gift-card__title">［商品名を入力］</h3>
+            <p class="gift-card__desc">［時期・内容を入力］</p>
+            <p class="gift-card__price">価格：［未設定］</p>
+            <span class="sample-flag">仮データ</span>
+          </article>
+          <article class="gift-card gift-card--consult">
+            <p class="gift-card__tag">ご予算・用途に合わせて</p>
+            <h3 class="gift-card__title">内容はご相談ください</h3>
+            <p class="gift-card__desc">「この予算で」「この方に贈りたい」など、まずはお気軽にお知らせください。</p>
+          </article>
+        </div>
+
+        <div class="gift__info">
+          <div class="ship-note">
+            <span class="ship-note__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.8" fill="#fff"/><circle cx="17" cy="17.5" r="1.8" fill="#fff"/></svg>
+            </span>
+            <div>
+              <p class="ship-note__title">愛媛県外への全国発送にも対応しています</p>
+              <p class="ship-note__text">送料・配送条件・お届け日数などは、ご注文の際にDMでご案内します。</p>
+            </div>
+          </div>
+          <div class="gift__actions">
+            <a class="btn btn--light btn--lg" data-link="dm">贈答品についてDMで相談する</a>
+            <a class="btn btn--outline-light btn--lg" data-link="dm">贈答品を注文したい</a>
+          </div>
+          <p class="link-note link-note--light" data-link-note>※Instagramのリンクは準備中です</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 5. 季節のおすすめ ========== -->
+    <section class="section season" id="season" aria-labelledby="season-title">
+      <div class="container">
+        <p class="section__label">Season</p>
+        <h2 class="section__title" id="season-title">季節のおすすめ</h2>
+        <p class="section__lead">旬の果物や入荷のお知らせは、Instagramで随時ご紹介しています。最新の入荷状況はInstagramでご確認ください。</p>
+
+        <!-- 季節の商品カード：内容が決まったら差し替えてください（仮データ） -->
+        <div class="season__cards">
+          <article class="season-card">
+            <figure class="photo photo--square" data-alt="">
+              <div class="photo__ph"><span class="ph-badge">仮画像</span><p class="ph-note">果物の写真</p></div>
+            </figure>
+            <p class="season-card__time">［時期］</p>
+            <h3 class="season-card__title">［果物の名前］</h3>
+            <p class="season-card__desc">［ひとことコメント］</p>
+          </article>
+          <article class="season-card">
+            <figure class="photo photo--square" data-alt="">
+              <div class="photo__ph"><span class="ph-badge">仮画像</span><p class="ph-note">果物の写真</p></div>
+            </figure>
+            <p class="season-card__time">［時期］</p>
+            <h3 class="season-card__title">［果物の名前］</h3>
+            <p class="season-card__desc">［ひとことコメント］</p>
+          </article>
+          <article class="season-card">
+            <figure class="photo photo--square" data-alt="">
+              <div class="photo__ph"><span class="ph-badge">仮画像</span><p class="ph-note">果物の写真</p></div>
+            </figure>
+            <p class="season-card__time">［時期］</p>
+            <h3 class="season-card__title">［果物の名前］</h3>
+            <p class="season-card__desc">［ひとことコメント］</p>
+          </article>
+        </div>
+
+        <div class="season__cta">
+          <a class="btn btn--primary btn--lg" data-link="instagram">
+            <svg class="btn__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            Instagramで最新情報を見る
+          </a>
+          <p class="link-note" data-link-note>※Instagramのリンクは準備中です</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 6. 家族とお店 ========== -->
+    <section class="section family" id="family" aria-labelledby="family-title">
+      <div class="container">
+        <p class="section__label">Family</p>
+        <h2 class="section__title" id="family-title">家族とお店</h2>
+        <p class="section__lead">店に立つのは、父・母・弟の3人です。</p>
+        <ul class="family__list">
+          <li class="member">
+            <figure class="photo photo--member" data-image="father" data-alt="美川青果の父">
+              <div class="photo__ph"><span class="ph-badge">仮画像</span><p class="ph-note">父の写真<br><code>images.father</code></p></div>
+            </figure>
+            <p class="member__role">父</p>
+            <h3 class="member__catch">果物を見る目に厳しい、職人気質。</h3>
+            <p class="member__text">店に並べる果物は、厳しい目で選んでいます。</p>
+          </li>
+          <li class="member">
+            <figure class="photo photo--member" data-image="mother" data-alt="美川青果の母">
+              <div class="photo__ph"><span class="ph-badge">仮画像</span><p class="ph-note">母の写真<br><code>images.mother</code></p></div>
+            </figure>
+            <p class="member__role">母</p>
+            <h3 class="member__catch">明るい声で迎える、店の顔。</h3>
+            <p class="member__text">接客が得意で、明るくお客様をお迎えしています。</p>
+          </li>
+          <li class="member">
+            <figure class="photo photo--member" data-image="brother" data-alt="美川青果の弟">
+              <div class="photo__ph"><span class="ph-badge">仮画像</span><p class="ph-note">弟の写真<br><code>images.brother</code></p></div>
+            </figure>
+            <p class="member__role">弟</p>
+            <h3 class="member__catch">行動力が持ち味。</h3>
+            <p class="member__text">持ち前の行動力で、店を支えています。</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== 7. 店舗情報 ========== -->
+    <section class="section shop" id="shop" aria-labelledby="shop-title">
+      <div class="container shop__grid">
+        <div class="shop__info">
+          <p class="section__label">Shop</p>
+          <h2 class="section__title" id="shop-title">店舗情報</h2>
+          <p class="shop__name">美川青果<span>MIKAWA SEIKA</span></p>
+          <p class="shop__sub">愛媛県松山市・中央卸売市場の目の前</p>
+          <dl class="shop__list">
+            <div><dt>住所</dt><dd data-shop="address"><span class="unset">［未設定］住所を入力</span></dd></div>
+            <div><dt>営業時間</dt><dd data-shop="hours"><span class="unset">［未設定］営業時間を入力</span></dd></div>
+            <div><dt>定休日</dt><dd data-shop="closed"><span class="unset">［未設定］定休日を入力</span></dd></div>
+            <div><dt>電話番号</dt><dd data-shop="phone"><span class="unset">［未設定］電話番号を入力</span></dd></div>
+            <div><dt>Instagram</dt><dd data-shop="instagram"><span class="unset">［未設定］アカウントを入力</span></dd></div>
+          </dl>
+          <div class="shop__actions">
+            <a class="btn btn--primary" data-link="instagram">Instagramを見る</a>
+            <a class="btn btn--ghost" data-link="dm">DMで問い合わせる</a>
+          </div>
+          <p class="link-note" data-link-note>※Instagramのリンクは準備中です</p>
+        </div>
+        <div class="shop__side">
+          <div class="map" data-map>
+            <div class="photo__ph">
+              <span class="ph-badge">地図未設定</span>
+              <p class="ph-title">Googleマップ</p>
+              <p class="ph-note">住所確定後、<code>shop.mapEmbedUrl</code> に埋め込みURLを設定</p>
+            </div>
+          </div>
+          <figure class="photo photo--shop" data-image="shop" data-alt="美川青果の店内">
+            <div class="photo__ph"><span class="ph-badge">仮画像</span><p class="ph-note">店内の写真　<code>images.shop</code></p></div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== フッター ========== -->
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__brand">
+        <span class="emblem emblem--sm emblem--light" aria-hidden="true"><span class="emblem__mark">美</span></span>
+        <div>
+          <p class="site-footer__name">美川青果</p>
+          <p class="site-footer__tag">くだものだもの</p>
+        </div>
+      </div>
+      <p class="site-footer__copy">&copy; <span data-year></span> 美川青果</p>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
