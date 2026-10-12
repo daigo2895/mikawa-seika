@@ -73,14 +73,24 @@
   /* ---------- 画像の差し替え ----------
      data-image="キー" の要素に、config.js の images[キー] を表示 */
   document.querySelectorAll("[data-image]").forEach(function (fig) {
-    var src = images[fig.getAttribute("data-image")];
+    var key = fig.getAttribute("data-image");
+    var src = images[key];
+    /* スマホ用の画像があれば、スマホではそちらを使う（例：images.heroMobile） */
+    if (images[key + "Mobile"] && window.matchMedia("(max-width: 699px)").matches) src = images[key + "Mobile"];
     if (!src) return;
     var img = new Image();
-    img.alt = fig.getAttribute("data-alt") || "";
+    var alts = cfg.imageAlts || {};
+    img.alt = alts[key] != null ? alts[key] : (fig.getAttribute("data-alt") || "");
     img.decoding = "async";
-    if (fig.getAttribute("data-image") !== "hero") img.loading = "lazy";
     img.onload = function () { fig.innerHTML = ""; fig.appendChild(img); };
-    img.src = src; // 読み込みに失敗した場合はプレースホルダーのまま
+    /* KV以外は、画面に近づいてから読み込む（表示を軽くするため） */
+    if (key === "hero" || !("IntersectionObserver" in window)) { img.src = src; return; }
+    var io = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return;
+      io.disconnect();
+      img.src = src; // 読み込みに失敗した場合はプレースホルダーのまま
+    }, { rootMargin: "400px" });
+    io.observe(fig);
   });
 
   /* ---------- ロゴ画像 ---------- */

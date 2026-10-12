@@ -23,13 +23,28 @@ window.SITE_CONFIG = {
   /* 画像ファイル（images/ フォルダに入れてファイル名を書く）
      空欄のあいだは、仮画像であることが分かるプレースホルダーが表示されます。 */
   images: {
-    logo: "",         // 例: "images/logo.png"（正式ロゴ。未設定ならテキストの仮ロゴ）
-    hero: "",         // 例: "images/hero-family.jpg"（父・母・弟の3人の写真）
-    about: "",        // 例: "images/shop-front.jpg"（店構え・店内）
-    gift: "",         // 例: "images/gift-box.jpg"（贈答品の詰め合わせ）
-    father: "",       // 例: "images/father.jpg"
-    mother: "",       // 例: "images/mother.jpg"
-    brother: "",      // 例: "images/brother.jpg"
-    shop: ""          // 例: "images/shop-inside.jpg"
+    logo: "",                              // 正式ロゴ（未設定ならテキストの仮ロゴ）
+    hero: "images/hero.jpg",               // KV（PC）※仮：店構え。本番は家族3人の写真の予定
+    heroMobile: "images/hero-mobile.jpg",  // KV（スマホ用・縦長）※仮
+    about: "images/shop-front.jpg",        // 美川青果について
+    gift: "images/grape-display.jpg",      // 贈り物
+    season1: "images/season-mikan.jpg",    // 季節のおすすめ 1
+    season2: "images/season-shine.jpg",    // 季節のおすすめ 2
+    season3: "images/season-apple.jpg",    // 季節のおすすめ 3
+    father: "",
+    mother: "",
+    brother: "",
+    shop: "images/shop-inside.jpg"         // 店舗情報（店内）
+  },
+
+  /* 画像の代替テキスト（読み上げ用）。HTML側の説明より優先されます */
+  imageAlts: {
+    hero: "「くだものだもの」の看板が掛かる美川青果の店構え",
+    about: "美川青果の店構え",
+    gift: "ネットに包まれて並ぶシャインマスカットとぶどう",
+    season1: "店頭に並ぶみかん",
+    season2: "袋に入ったシャインマスカット",
+    season3: "ネットに包まれたりんご",
+    shop: "果物や野菜が並ぶ美川青果の店内"
   }
 };
