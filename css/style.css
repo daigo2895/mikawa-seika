@@ -177,6 +177,8 @@ code { font-size: .85em; background: rgba(0,0,0,.08); padding: .05em .35em; bord
 }
 .kv__hint::before { content: ""; position: absolute; left: 11px; top: 50%; width: 12px; height: 12px; margin-top: -6px; border-radius: 50%; background: var(--mikan); }
 .kv.is-grabbing { cursor: grabbing; }
+.kv__photo img { pointer-events: none; -webkit-user-drag: none; user-select: none; }
+.kv { -webkit-user-select: none; user-select: none; }
 .kv__score {
   position: absolute; z-index: 3; right: var(--gutter); top: calc(100% - 92px);
   padding: 2px 14px; border-radius: 999px; background: var(--mikan); color: var(--ink);

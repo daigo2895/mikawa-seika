@@ -1,5 +1,5 @@
 /*
- * KV：写真の上に果物が降ってくる。果物をつかんで投げて、果物かごのゴールに入れられる
+ * KV：写真の上に果物が降ってくる。果物をつかんで投げて、中央の玉入れのかごに入れられる
  * 物理演算に matter.js（js/vendor/matter.min.js）を使用
  *
  * 操作
@@ -28,18 +28,27 @@
   var scoreEl = document.querySelector("[data-hero-score]");
   var score = 0;
 
-  /* ---- ゴール（果物かご）の位置と大きさ ---- */
-  var G = { x: 0, y: 0, half: 0, boardX: 0, boardTop: 0, boardBottom: 0, netDepth: 0, swish: 0 };
+  /* ---- ゴール：中央に立てた玉入れのかご ---- */
+  var G = { x: 0, rimY: 0, half: 0, bottomHalf: 0, bottomY: 0, band: 0, swish: 0 };
   function layoutGoal() {
     var r = radiusBase();
     var mobile = W < 700;
-    G.half = r * 1.75;                                   /* 輪の半径（果物よりひと回り大きく） */
-    G.boardX = W - (mobile ? 14 : Math.max(40, W * 0.06));
-    G.x = G.boardX - 10 - G.half;                         /* 輪の中心 */
-    G.y = Math.round(H * (mobile ? 0.6 : 0.42));          /* 輪の高さ */
-    G.boardTop = G.y - r * 3.4;
-    G.boardBottom = G.y + r * 0.9;
-    G.netDepth = r * 2.1;
+    G.x = Math.round(W / 2);
+    G.half = r * 2.5;                                   /* かごの口の半分の幅 */
+    G.bottomHalf = r * 1.8;                             /* かごの底の半分の幅 */
+    G.rimY = Math.round(H * (mobile ? 0.56 : 0.6));     /* かごの口の高さ */
+    G.bottomY = G.rimY + r * 2.1;
+    G.band = r * 0.5;                                   /* 口の帯の太さ */
+  }
+  function segment(x1, y1, x2, y2, th, opt) {
+    var dx = x2 - x1, dy = y2 - y1;
+    return M.Bodies.rectangle((x1 + x2) / 2, (y1 + y2) / 2, Math.sqrt(dx * dx + dy * dy), th,
+      Object.assign({ isStatic: true, angle: Math.atan2(dy, dx) }, opt));
+  }
+  /* その位置での、かごの内側の半分の幅 */
+  function innerHalf(y) {
+    var t = Math.min(1, Math.max(0, (y - G.rimY) / (G.bottomY - G.rimY)));
+    return G.half + (G.bottomHalf - G.half) * t - 6;
   }
 
   function size() {
@@ -51,98 +60,102 @@
     layoutGoal();
     walls.forEach(function (w) { M.Composite.remove(world, w); });
     var t = 200, opt = { isStatic: true, friction: 0.4, restitution: 0.2 };
-    var rimOpt = { isStatic: true, restitution: 0.5, friction: 0.1 };
-    var boardH = G.boardBottom - G.boardTop;
+    var basket = { restitution: 0.25, friction: 0.3 };
     walls = [
       M.Bodies.rectangle(W / 2, H + t / 2, W * 3, t, opt),
       M.Bodies.rectangle(-t / 2, H / 2 - H, t, H * 4, opt),
       M.Bodies.rectangle(W + t / 2, H / 2 - H, t, H * 4, opt),
-      /* ボード（木の板）と輪の左右の縁 */
-      M.Bodies.rectangle(G.boardX + 4, G.boardTop + boardH / 2, 8, boardH, { isStatic: true, restitution: 0.4 }),
-      M.Bodies.circle(G.x - G.half, G.y, 4, rimOpt),
-      M.Bodies.circle(G.x + G.half, G.y, 4, rimOpt)
+      /* かごの左右の壁と底、支柱 */
+      segment(G.x - G.half, G.rimY, G.x - G.bottomHalf, G.bottomY, 8, basket),
+      segment(G.x + G.half, G.rimY, G.x + G.bottomHalf, G.bottomY, 8, basket),
+      segment(G.x - G.bottomHalf, G.bottomY, G.x + G.bottomHalf, G.bottomY, 8, basket),
+      M.Bodies.rectangle(G.x, (G.bottomY + H) / 2, 10, H - G.bottomY, { isStatic: true, restitution: 0.3 })
     ];
     M.Composite.add(world, walls);
     fruits.forEach(function (b) {
-      if (b.position.x > W - 10 || b.position.y > H) M.Body.setPosition(b, { x: Math.min(W - 40, Math.max(40, b.position.x)), y: H - 80 });
+      if (b.position.x > W - 10 || b.position.y > H || isInBasket(b)) respawn(b);
     });
   }
 
   function radiusBase() { return W < 600 ? 24 : W < 1100 ? 32 : 38; }
   function count() { return W < 600 ? 18 : W < 1100 ? 22 : 28; }
 
+  /* かごと支柱の真上を避けて、左右どちらかに落とす */
+  function spawnX() {
+    var gap = G.half + 30, left = Math.random() < 0.5;
+    var lo = left ? 40 : G.x + gap, hi = left ? G.x - gap : W - 40;
+    if (hi - lo < 20) { lo = 40; hi = W - 40; }
+    return lo + Math.random() * (hi - lo);
+  }
   function addFruit(i) {
     var k = kinds[i % kinds.length];
     var rr = radiusBase() * FR[k].r * (0.85 + Math.random() * 0.3);
-    /* ゴールの真上には落とさない */
-    var x = 40 + Math.random() * Math.max(40, (G.x - G.half - 30) - 40);
-    var b = M.Bodies.circle(x, -60 - Math.random() * 200, rr, {
+    var b = M.Bodies.circle(spawnX(), -60 - Math.random() * 200, rr, {
       restitution: 0.45, friction: 0.25, frictionAir: 0.008, density: 0.002
     });
-    b.kind = k; b.rr = rr; b.prevY = b.position.y; b.lastGoal = 0;
+    b.kind = k; b.rr = rr; b.counted = false; b.insideSince = 0;
     M.Body.setAngle(b, Math.random() * Math.PI * 2);
     M.Body.setAngularVelocity(b, (Math.random() - 0.5) * 0.2);
     fruits.push(b);
     M.Composite.add(world, b);
   }
+  function respawn(b) {
+    M.Sleeping.set(b, false);
+    M.Body.setPosition(b, { x: spawnX(), y: -60 - Math.random() * 120 });
+    M.Body.setVelocity(b, { x: 0, y: 0 });
+    b.counted = false; b.insideSince = 0; b.touched = 0;
+  }
+  function isInBasket(b) {
+    var y = b.position.y;
+    return y > G.rimY && y < G.bottomY + 4 && Math.abs(b.position.x - G.x) < innerHalf(y);
+  }
 
   /* ---- 描画 ---- */
-  function drawBoard() {
-    var r = radiusBase();
-    var w = r * 1.1, top = G.boardTop, h = G.boardBottom - G.boardTop;
-    /* 支柱 */
-    ctx.fillStyle = "rgba(29,75,51,.85)";
-    ctx.fillRect(G.boardX, G.boardBottom - 2, 6, H - G.boardBottom + 2);
-    /* 木の板 */
+  function drawPole() {
+    /* 紅白ではなく、お店の深緑と生成りのしま模様の支柱 */
+    var w = 10, top = G.bottomY, x = G.x - w / 2;
     ctx.save();
-    ctx.translate(G.boardX - w + 8, top);
-    ctx.fillStyle = "#c99c62";
-    roundRect(0, 0, w, h, 6); ctx.fill();
-    ctx.strokeStyle = "rgba(90,58,20,.35)"; ctx.lineWidth = 1;
-    for (var y = 6; y < h; y += 7) { ctx.beginPath(); ctx.moveTo(4, y); ctx.lineTo(w - 4, y); ctx.stroke(); }
-    /* 帯（美川青果） */
-    ctx.fillStyle = "#1d4b33";
-    roundRect(w * 0.18, h * 0.08, w * 0.64, h * 0.6, 3); ctx.fill();
+    ctx.fillStyle = "#1d4b33"; ctx.fillRect(x, top, w, H - top);
     ctx.fillStyle = "#f6f1e4";
-    ctx.font = (r * 0.42) + "px 'Dela Gothic One', sans-serif";
-    ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    var chars = ["美", "川", "青", "果"];
-    for (var i = 0; i < 4; i++) ctx.fillText(chars[i], w / 2, h * 0.08 + h * 0.6 * (i + 0.5) / 4);
+    for (var y = top + 18; y < H; y += 36) ctx.fillRect(x, y, w, 18);
     ctx.restore();
   }
-  function drawNet(front) {
-    /* 果物かごのような編み目のネット。ゴールが決まると少し揺れる */
-    var sw = G.swish > 0 ? Math.sin(G.swish * 0.6) * 4 * (G.swish / 30) : 0;
-    var topL = G.x - G.half, topR = G.x + G.half;
-    var botL = G.x - G.half * 0.62 + sw, botR = G.x + G.half * 0.62 + sw, botY = G.y + G.netDepth;
-    ctx.save();
+  function basketPath() {
     ctx.beginPath();
-    ctx.moveTo(topL, G.y); ctx.lineTo(topR, G.y); ctx.lineTo(botR, botY); ctx.lineTo(botL, botY); ctx.closePath();
-    if (!front) {
-      ctx.fillStyle = "rgba(185,142,87,.35)";
-      ctx.fill();
-      ctx.restore();
-      return;
-    }
-    ctx.clip();
-    ctx.strokeStyle = "rgba(246,241,228,.9)";
-    ctx.lineWidth = 2;
-    var step = G.half / 2.6, span = G.netDepth + G.half * 2;
-    for (var x = topL - span; x < topR + span; x += step) {
-      ctx.beginPath(); ctx.moveTo(x, G.y); ctx.lineTo(x + span, G.y + span); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(x, G.y); ctx.lineTo(x - span, G.y + span); ctx.stroke();
-    }
-    ctx.restore();
-    /* かごの縁取り */
+    ctx.moveTo(G.x - G.half, G.rimY); ctx.lineTo(G.x + G.half, G.rimY);
+    ctx.lineTo(G.x + G.bottomHalf, G.bottomY); ctx.lineTo(G.x - G.bottomHalf, G.bottomY); ctx.closePath();
+  }
+  function drawBasketBack() {
     ctx.save();
-    ctx.strokeStyle = "rgba(201,156,98,.95)"; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.moveTo(botL, botY); ctx.lineTo(botR, botY); ctx.stroke();
+    basketPath();
+    ctx.fillStyle = "rgba(90,58,20,.45)";
+    ctx.fill();
     ctx.restore();
   }
-  function drawRim() {
+  function drawBasketFront() {
+    var sw = G.swish > 0 ? Math.sin(G.swish * 0.7) * 3 * (G.swish / 30) : 0;
     ctx.save();
-    ctx.strokeStyle = "#f28c18"; ctx.lineWidth = 6; ctx.lineCap = "round";
-    ctx.beginPath(); ctx.moveTo(G.x - G.half, G.y); ctx.lineTo(G.x + G.half + 8, G.y); ctx.stroke();
+    ctx.translate(sw, 0);
+    /* 竹かごの編み目（中の果物が透けて見える） */
+    basketPath(); ctx.save(); ctx.clip();
+    ctx.strokeStyle = "rgba(233,207,160,.95)"; ctx.lineWidth = 3;
+    var step = G.half / 3, span = (G.bottomY - G.rimY) + G.half * 2;
+    for (var x = G.x - G.half - span; x < G.x + G.half + span; x += step) {
+      ctx.beginPath(); ctx.moveTo(x, G.rimY); ctx.lineTo(x + span, G.rimY + span); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(x, G.rimY); ctx.lineTo(x - span, G.rimY + span); ctx.stroke();
+    }
+    ctx.restore();
+    ctx.strokeStyle = "#b98e57"; ctx.lineWidth = 4; ctx.lineJoin = "round";
+    basketPath(); ctx.stroke();
+    /* 口の帯（美川青果） */
+    var bw = G.half * 2 + 10, bx = G.x - bw / 2, by = G.rimY - G.band / 2;
+    ctx.fillStyle = "#1d4b33";
+    roundRect(bx, by, bw, G.band, G.band / 2); ctx.fill();
+    ctx.strokeStyle = "#f28c18"; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = "#f6f1e4";
+    ctx.font = (G.band * 0.62) + "px 'Dela Gothic One', sans-serif";
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText("美 川 青 果", G.x, G.rimY + 1);
     ctx.restore();
   }
   function roundRect(x, y, w, h, r) {
@@ -151,37 +164,40 @@
     ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
   }
 
+  function drawFruit(b) {
+    var im = images[b.kind], s = b.rr * 2.2;
+    if (!im.complete) return;
+    ctx.save();
+    ctx.translate(b.position.x, b.position.y);
+    ctx.rotate(b.angle);
+    ctx.shadowColor = "rgba(0,0,0,.28)"; ctx.shadowBlur = 10; ctx.shadowOffsetY = 4;
+    if (b === grab.body) { ctx.scale(1.08, 1.08); }
+    ctx.drawImage(im, -s / 2, -s / 2, s, s);
+    ctx.restore();
+  }
   function draw() {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
-    drawBoard();
-    drawNet(false);
+    drawPole();
+    drawBasketBack();
+    var outside = [];
     for (var i = 0; i < fruits.length; i++) {
-      var b = fruits[i], im = images[b.kind], s = b.rr * 2.2;
-      if (!im.complete) continue;
-      ctx.save();
-      ctx.translate(b.position.x, b.position.y);
-      ctx.rotate(b.angle);
-      ctx.shadowColor = "rgba(0,0,0,.28)"; ctx.shadowBlur = 10; ctx.shadowOffsetY = 4;
-      if (b === grab.body) { ctx.scale(1.08, 1.08); }
-      ctx.drawImage(im, -s / 2, -s / 2, s, s);
-      ctx.restore();
+      if (isInBasket(fruits[i])) drawFruit(fruits[i]); else outside.push(fruits[i]);
     }
-    drawNet(true);
-    drawRim();
+    drawBasketFront();
+    for (var j = 0; j < outside.length; j++) drawFruit(outside[j]);
   }
 
-  /* ---- ゴール判定：輪の上から下へ、輪の内側を通過したら1点 ---- */
+  /* ---- 判定：自分で投げた果物がかごに入ったら1点。少しすると外に戻る ---- */
   M.Events.on(engine, "afterUpdate", function () {
     var now = performance.now();
     for (var i = 0; i < fruits.length; i++) {
-      var b = fruits[i], y = b.position.y, x = b.position.x;
-      if (b !== grab.body && now - (b.touched || -1e9) < 5000 && b.prevY < G.y && y >= G.y && b.velocity.y > 0 &&
-          x > G.x - G.half + 2 && x < G.x + G.half - 2 && now - b.lastGoal > 800) {
-        b.lastGoal = now;
-        goal(b);
-      }
-      b.prevY = y;
+      var b = fruits[i];
+      if (b === grab.body || !isInBasket(b)) { b.insideSince = 0; continue; }
+      if (!b.insideSince) b.insideSince = now;
+      if (!b.counted && now - (b.touched || -1e9) < 6000) { b.counted = true; goal(b); }
+      /* かごの中に2秒ほどたまったら、また上から降ってくる */
+      if (now - b.insideSince > 2000) respawn(b);
     }
     if (G.swish > 0) G.swish--;
   });
@@ -190,7 +206,7 @@
   function goal(b) {
     score++;
     G.swish = 30;
-    say(LINES[Math.floor(Math.random() * LINES.length)], G.x, G.y - radiusBase() * 3.6);
+    say(LINES[Math.floor(Math.random() * LINES.length)], G.x, G.rimY - radiusBase() * 3);
     if (scoreEl) {
       scoreEl.hidden = false;
       scoreEl.textContent = score + " ゴール";
@@ -206,7 +222,7 @@
     M.Engine.update(engine, dt);
     draw();
     /* 全部止まったらループを休ませる（電池にやさしく） */
-    if (allDropped && !grab.body && G.swish <= 0 && fruits.every(function (b) { return b.isSleeping; })) return;
+    if (allDropped && !grab.body && G.swish <= 0 && fruits.every(function (b) { return b.isSleeping && !b.insideSince; })) return;
     raf = requestAnimationFrame(loop);
   }
   function kick() { if (!raf && running && inView && !document.hidden) { last = 0; raf = requestAnimationFrame(loop); } }
@@ -247,6 +263,7 @@
     if (e.pointerType === "mouse" && e.button !== 0) return;
     var p = local(e), b = hit(p.x, p.y);
     if (!b) return;
+    e.preventDefault(); /* 背景写真がドラッグされてつかみが外れるのを防ぐ */
     grab.body = b; grab.id = e.pointerId; grab.x = p.x; grab.y = p.y;
     grab.hist = [{ x: p.x, y: p.y, t: performance.now() }]; grab.startT = performance.now(); grab.moved = 0;
     grab.offX = b.position.x - p.x; grab.offY = b.position.y - p.y;
@@ -279,8 +296,13 @@
       say(FR[b.kind].name, b.position.x, b.position.y - b.rr - 60);
     } else {
       /* 直近の指の動きから投げる速さを計算 */
-      var a = h[0], z = h[h.length - 1], dt = Math.max(16, z.t - a.t);
-      var vx = (z.x - a.x) / dt * 16.7, vy = (z.y - a.y) / dt * 16.7;
+      /* 離す直前（0.1秒以内）の指の動きだけを使う。止めてから離したら、そっと落ちる */
+      var recent = h.filter(function (q) { return now - q.t < 100; });
+      var vx = 0, vy = 0;
+      if (recent.length >= 2) {
+        var a = recent[0], z = recent[recent.length - 1], dt = Math.max(16, z.t - a.t);
+        vx = (z.x - a.x) / dt * 16.7; vy = (z.y - a.y) / dt * 16.7;
+      }
       var max = 32, sp = Math.sqrt(vx * vx + vy * vy);
       if (sp > max) { vx *= max / sp; vy *= max / sp; }
       M.Body.setVelocity(b, { x: vx, y: vy });
@@ -355,7 +377,7 @@
   }
 
   /* 動作確認用（URLに ?kvdebug を付けたときだけ） */
-  if (/kvdebug/.test(location.search)) window.__kv = { fruits: fruits, G: G };
+  if (/kvdebug/.test(location.search)) window.__kv = { fruits: fruits, G: G, grab: grab };
 
   /* フォントを読み込んでからボードの文字を描く */
   var go = function () { setTimeout(start, reduce ? 0 : 700); };
