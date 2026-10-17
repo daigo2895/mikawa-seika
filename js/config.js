@@ -30,9 +30,9 @@ window.SITE_CONFIG = {
     gift: "images/grape-display.jpg",      // 贈り物
     season1: "images/season-tone.jpg",     // おすすめ 1：刀根早生
     season2: "images/season-kiyota.jpg",   // おすすめ 2：きよた柿
-    father: "",
+    father: "images/father.jpg",           // 父
     mother: "",
-    brother: "",
+    son: "images/son.jpg",                 // 息子
     shop: "images/shop-inside.jpg"         // 店舗情報（店内）
   },
 
@@ -43,6 +43,8 @@ window.SITE_CONFIG = {
     gift: "ネットに包まれて並ぶシャインマスカットとぶどう",
     season1: "かごに入った刀根早生",
     season2: "かごに入ったきよた柿",
+    father: "美川青果のロゴ入りシャツを着て笑顔の父",
+    son: "店の事務所で手元を見る息子",
     shop: "果物や野菜が並ぶ美川青果の店内"
   }
 };

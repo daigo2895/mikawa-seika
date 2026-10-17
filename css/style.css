@@ -455,6 +455,7 @@ code { font-size: .85em; background: rgba(0,0,0,.08); padding: .05em .35em; bord
 }
 .member:nth-child(2) .member__role { background: var(--ringo); color: #fff; }
 .member:nth-child(3) .member__role { background: var(--green); color: #fff; }
+.member__role--wide { font-size: 1.5rem; letter-spacing: 0; }
 .member__catch { font-size: 1.15rem; font-weight: 700; color: var(--green); line-height: 1.55; margin-bottom: 4px; }
 .member__text { font-size: .95rem; color: var(--ink-soft); }
 @media (min-width: 760px) {
