@@ -33,6 +33,7 @@ window.SITE_CONFIG = {
     father: "images/father.jpg",           // 父
     mother: "",
     son: "images/son.jpg",                 // 息子
+    reach: "images/reach.jpg",             // 看板犬リーチ
     shop: "images/shop-inside.jpg"         // 店舗情報（店内）
   },
 
@@ -45,6 +46,7 @@ window.SITE_CONFIG = {
     season2: "かごに入ったきよた柿",
     father: "美川青果のロゴ入りシャツを着て笑顔の父",
     son: "店の事務所で手元を見る息子",
+    reach: "毛布にくるまってくつろぐ看板犬のリーチ",
     shop: "果物や野菜が並ぶ美川青果の店内"
   }
 };

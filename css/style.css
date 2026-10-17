@@ -456,12 +456,17 @@ code { font-size: .85em; background: rgba(0,0,0,.08); padding: .05em .35em; bord
 .member:nth-child(2) .member__role { background: var(--ringo); color: #fff; }
 .member:nth-child(3) .member__role { background: var(--green); color: #fff; }
 .member__role--wide { font-size: 1.5rem; letter-spacing: 0; }
+.member:nth-child(4) .member__role { background: var(--budou); color: #fff; }
+.member__role--dog { font-size: 1.05rem; letter-spacing: 0; }
 .member__catch { font-size: 1.15rem; font-weight: 700; color: var(--green); line-height: 1.55; margin-bottom: 4px; }
 .member__text { font-size: .95rem; color: var(--ink-soft); }
 @media (min-width: 760px) {
-  .family__list { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .family__list { grid-template-columns: repeat(2, 1fr); gap: 32px; }
   .member__photo { aspect-ratio: 4 / 5; }
-  .member:nth-child(2) { margin-top: 56px; }
+  .member:nth-child(even) { margin-top: 56px; }
+}
+@media (min-width: 1024px) {
+  .family__list { grid-template-columns: repeat(4, 1fr); gap: 24px; }
 }
 @media (min-width: 900px) { .family { padding: 120px 0; } }
 
