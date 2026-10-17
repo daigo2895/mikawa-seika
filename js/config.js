@@ -28,9 +28,8 @@ window.SITE_CONFIG = {
     heroMobile: "images/hero-mobile.jpg",  // KV（スマホ用・縦長）※仮
     about: "images/shop-front.jpg",        // 美川青果について
     gift: "images/grape-display.jpg",      // 贈り物
-    season1: "images/season-mikan.jpg",    // 季節のおすすめ 1
-    season2: "images/season-shine.jpg",    // 季節のおすすめ 2
-    season3: "images/season-apple.jpg",    // 季節のおすすめ 3
+    season1: "images/season-tone.jpg",     // おすすめ 1：刀根早生
+    season2: "images/season-kiyota.jpg",   // おすすめ 2：きよた柿
     father: "",
     mother: "",
     brother: "",
@@ -42,9 +41,8 @@ window.SITE_CONFIG = {
     hero: "「くだものだもの」の看板が掛かる美川青果の店構え",
     about: "美川青果の店構え",
     gift: "ネットに包まれて並ぶシャインマスカットとぶどう",
-    season1: "店頭に並ぶみかん",
-    season2: "袋に入ったシャインマスカット",
-    season3: "ネットに包まれたりんご",
+    season1: "かごに入った刀根早生",
+    season2: "かごに入ったきよた柿",
     shop: "果物や野菜が並ぶ美川青果の店内"
   }
 };

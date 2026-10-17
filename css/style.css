@@ -431,12 +431,13 @@ code { font-size: .85em; background: rgba(0,0,0,.08); padding: .05em .35em; bord
 .pop__photo { aspect-ratio: 1; height: auto; border-radius: 4px; margin-bottom: 12px; overflow: hidden; }
 .pop__time { font-size: .78rem; font-weight: 700; color: var(--mikan); }
 .pop__name { font: 400 1.3rem/1.4 var(--display); color: var(--green); }
+.pop__yomi { margin-left: .5em; font: 700 .72rem var(--sans); color: var(--ink-soft); }
 .pop__desc { font-size: .9rem; color: var(--ink-soft); margin-top: 2px; }
 .season__cta { margin-top: 18px; text-align: center; }
 @media (min-width: 900px) {
   .season { padding: 120px 0; }
   .season__head { grid-template-columns: auto 1fr; gap: 56px; align-items: end; margin-bottom: 40px; }
-  .season__rail { max-width: var(--maxw); margin: 0 auto; grid-auto-flow: row; grid-auto-columns: auto; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; overflow: visible; }
+  .season__rail { max-width: var(--maxw); margin: 0 auto; grid-auto-flow: row; grid-auto-columns: auto; grid-template-columns: repeat(auto-fit, minmax(0, 340px)); justify-content: center; gap: 48px; overflow: visible; }
 }
 
 /* =========================================================
